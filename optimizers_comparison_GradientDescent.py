@@ -25,7 +25,7 @@ import six.moves.urllib.request as request
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Windows users: You only need to change PATH, rest is platform independent
-PATH = r"c:/tmp/"
+PATH = r"C:/tmp/GradientDescent"
 
 # Fetch and store Training and Test dataset files
 PATH_DATASET = PATH + os.sep + "dataset"
@@ -193,6 +193,8 @@ tf.logging.info("Evaluation results")
 for key in evaluate_result:
     tf.logging.info("   {}, was: {}".format(key, evaluate_result[key]))
 
+# we skip the prediction part since we don't need for our purpose
+"""
 # Predict the type of some Iris flowers.
 # Let's predict the examples in FILE_TEST, repeat only once.
 predict_results = classifier.predict(
@@ -203,8 +205,6 @@ for prediction in predict_results:
     # is Iris Setosa, Vericolor, Virginica, respectively.
     tf.logging.info("...{}".format(prediction["class_ids"]))
 
-# we skip the prediction part since we don't need for our purpose
-"""
 # Let create a dataset for prediction
 # We've taken the first 3 examples in FILE_TEST
 prediction_input = [[5.9, 3.0, 4.2, 1.5],  # -> 1, Iris Versicolor

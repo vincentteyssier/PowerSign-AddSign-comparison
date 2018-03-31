@@ -25,7 +25,7 @@ import six.moves.urllib.request as request
 tf.logging.set_verbosity(tf.logging.INFO)
 
 # Windows users: You only need to change PATH, rest is platform independent
-PATH = r"C:/tmp/"
+PATH = r"C:/tmp/AdaGrad"
 
 # Fetch and store Training and Test dataset files
 PATH_DATASET = PATH + os.sep + "dataset"

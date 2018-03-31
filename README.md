@@ -28,4 +28,10 @@ AddSign is the brownish curve
 PowerSign is the grey curve
 
 Global Steps results: 
-![alt text](https://github.com/vincentteyssier/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/vincentteyssier/PowerSign-AddSign-comparison/blob/master/screenshots_tensorboard/steps.PNG "Global Steps")
+
+Loss results: 
+![alt text](https://github.com/vincentteyssier/PowerSign-AddSign-comparison/blob/master/screenshots_tensorboard/loss.PNG "Loss")
+
+Accuracy results: 
+![alt text](https://github.com/vincentteyssier/PowerSign-AddSign-comparison/blob/master/screenshots_tensorboard/ACC.PNG "Accuracy")

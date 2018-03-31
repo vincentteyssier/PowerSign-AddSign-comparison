@@ -18,14 +18,14 @@ Each python script runs a different optimizer.
 We keep default settings and use the same learning rate on each run: 0.05
 
 I'm then loading my 4 runs into tensorboard:
-`tensorboard --logdir=run1:”C:/tmp/AdaGrad”,run2:”C:/tmp/GradientDescent”,run3:"C:/tmp/AddSign",run4:
+`tensorboard --logdir = run1:”C:/tmp/AdaGrad”,run2:”C:/tmp/GradientDescent”,run3:"C:/tmp/AddSign",run4:
 "C:/tmp/PowerSign" --port=6006`
 
 
-AdaGrad is the Orange curve
-GradientDescent is the Red/Pink curve
-AddSign is the brownish curve
-PowerSign is the grey curve
+- AdaGrad is the Orange curve
+- GradientDescent is the Red/Pink curve
+- AddSign is the brownish curve
+- PowerSign is the grey curve
 
 Global Steps results: 
 ![alt text](https://github.com/vincentteyssier/PowerSign-AddSign-comparison/blob/master/screenshots_tensorboard/steps.PNG "Global Steps")
@@ -35,3 +35,7 @@ Loss results:
 
 Accuracy results: 
 ![alt text](https://github.com/vincentteyssier/PowerSign-AddSign-comparison/blob/master/screenshots_tensorboard/ACC.PNG "Accuracy")
+
+The non smoothed results for accuracy are actually exactly similar: 0.9666666388511658
+
+We are now trying with learning rates picked over a logarythmic scale. EPOCHS are up from 500 to 2000.

@@ -27,6 +27,9 @@ tf.logging.set_verbosity(tf.logging.INFO)
 # Windows users: You only need to change PATH, rest is platform independent
 PATH = r"C:/tmp/PowerSign"
 
+learning_rate = 0.05
+
+
 # Fetch and store Training and Test dataset files
 PATH_DATASET = PATH + os.sep + "dataset"
 FILE_TRAIN = PATH_DATASET + os.sep + "iris_training.csv"
@@ -79,7 +82,8 @@ def my_input_fn(file_path, repeat_count=1, shuffle_count=1):
 def my_model_fn(
     features, # This is batch_features from input_fn
     labels,   # This is batch_labels from input_fn
-    mode):    # And instance of tf.estimator.ModeKeys, see below
+    mode,
+    params):    # And instance of tf.estimator.ModeKeys, see below
 
     if mode == tf.estimator.ModeKeys.PREDICT:
         tf.logging.info("my_model_fn: PREDICT, {}".format(mode))
@@ -149,7 +153,7 @@ def my_model_fn(
     # PowerSign Optimizer with learning rate=0.05
     # Our objective (train_op) is to minimize loss
     # Provide global step counter (used to count gradient updates)
-    optimizer = tf.contrib.opt.PowerSignOptimizer(0.05)
+    optimizer = tf.contrib.opt.PowerSignOptimizer(params['learning_rate'])
     train_op = optimizer.minimize(
         loss,
         global_step=tf.train.get_global_step())
@@ -165,23 +169,30 @@ def my_model_fn(
         loss=loss,
         train_op=train_op)
 
-# Create a custom estimator using my_model_fn to define the model
-tf.logging.info("Before classifier construction")
-classifier = tf.estimator.Estimator(
-    model_fn=my_model_fn,
-    model_dir=PATH)  # Path to where checkpoints etc are stored
-tf.logging.info("...done constructing classifier")
+# iterating over different learning rates
+for learning_rate in [0.5, 0.05, 0.005, 0.0005]:
+    PATH_RUN = PATH + os.sep + str(learning_rate) # Path to where checkpoints etc are stored
+    print ("Learning rate:" + str(learning_rate))
+    # Create a custom estimator using my_model_fn to define the model
+    tf.logging.info("Before classifier construction")
+    classifier = tf.estimator.Estimator(
+        model_fn=my_model_fn,
+        model_dir=PATH_RUN,
+        params={
+            'learning_rate': learning_rate,
+        })  
+    tf.logging.info("...done constructing classifier")
 
-# 500 epochs = 500 * 120 records [60000] = (500 * 120) / 32 batches = 1875 batches
-# 4 epochs = 4 * 30 records = (4 * 30) / 32 batches = 3.75 batches
+    # 500 epochs = 500 * 120 records [60000] = (500 * 120) / 32 batches = 1875 batches
+    # 4 epochs = 4 * 30 records = (4 * 30) / 32 batches = 3.75 batches
 
-# Train our model, use the previously function my_input_fn
-# Input to training is a file with training example
-# Stop training after 8 iterations of train data (epochs)
-tf.logging.info("Before classifier.train")
-classifier.train(
-    input_fn=lambda: my_input_fn(FILE_TRAIN, 500, 256))
-tf.logging.info("...done classifier.train")
+    # Train our model, use the previously function my_input_fn
+    # Input to training is a file with training example
+    # Stop training after 8 iterations of train data (epochs)
+    tf.logging.info("Before classifier.train")
+    classifier.train(
+        input_fn=lambda: my_input_fn(FILE_TRAIN, 2000, 256))
+    tf.logging.info("...done classifier.train")
 
 # Evaluate our model using the examples contained in FILE_TEST
 # Return value will contain evaluation_metrics such as: loss & average_loss

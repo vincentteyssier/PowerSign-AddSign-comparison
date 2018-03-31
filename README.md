@@ -20,3 +20,12 @@ We keep default settings and use the same learning rate on each run: 0.05
 I'm then loading my 4 runs into tensorboard:
 `tensorboard --logdir=run1:”C:/tmp/AdaGrad”,run2:”C:/tmp/GradientDescent”,run3:"C:/tmp/AddSign",run4:
 "C:/tmp/PowerSign" --port=6006`
+
+
+AdaGrad is the Orange curve
+GradientDescent is the Red/Pink curve
+AddSign is the brownish curve
+PowerSign is the grey curve
+
+Global Steps results: 
+![alt text](https://github.com/vincentteyssier/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
